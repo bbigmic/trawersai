@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI App Development - Szkolenie</title>
+    <meta name="description" content="Zapisz się na ekskluzywne szkolenie z tworzenia aplikacji z AI. Naucz się najnowszych technologii i zostań ekspertem AI.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <div class="logo">
+                    <img src="images/trawers-logo.png" alt="TRAWERS-ADR Logo" class="logo-image">
+                    <span class="logo-text">TRAWERS-ADR</span>
+                </div>
+                <div class="nav-links">
+                    <a href="#home" class="nav-link">Strona główna</a>
+                    <a href="#about" class="nav-link">O szkoleniu</a>
+                    <a href="#requirements" class="nav-link">Wymagania</a>
+                    <a href="#locations" class="nav-link">Lokalizacje</a>
+                    <a href="#contact" class="nav-link">Kontakt</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        Stwórz aplikacje z <span class="gradient-text">AI</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        Dołącz do ekskluzywnego szkolenia i zostań ekspertem w tworzeniu inteligentnych aplikacji. 
+                        Naucz się najnowszych technologii AI w praktyce.
+                    </p>
+                </div>
+                <div class="hero-form">
+                    <div class="form-card">
+                        <h2 class="form-title">Zapisz się na szkolenie</h2>
+                        <p class="form-subtitle">Otrzymaj 95% zniżki dzięki dofinansowaniu z Unii Europejskiej!</p>
+                        
+                        <form id="registrationForm" class="registration-form" method="POST" action="javascript:void(0);">
+                            <div class="form-group">
+                                <label for="fullName" class="form-label">Imię i nazwisko</label>
+                                <input 
+                                    type="text" 
+                                    id="fullName" 
+                                    name="fullName" 
+                                    class="form-input" 
+                                    required
+                                    placeholder="Wprowadź swoje imię i nazwisko"
+                                >
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email</label>
+                                <input 
+                                    type="email" 
+                                    id="email" 
+                                    name="email" 
+                                    class="form-input" 
+                                    required
+                                    placeholder="twoj@email.com"
+                                >
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone" class="form-label">Numer telefonu</label>
+                                <input 
+                                    type="tel" 
+                                    id="phone" 
+                                    name="phone" 
+                                    class="form-input" 
+                                    required
+                                    placeholder="+48 123 456 789"
+                                >
+                            </div>
+                            
+                            <button type="submit" class="submit-btn">
+                                <span class="btn-text">Zapisz się teraz</span>
+                                <span class="btn-icon">→</span>
+                            </button>
+                        </form>
+                        
+                        <div class="form-footer">
+                            <p class="privacy-text">
+                                Klikając "Zapisz się" zgadzasz się z naszą 
+                                <a href="#" class="privacy-link">Polityką Prywatności</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- What You'll Learn Section -->
+        <section id="about" class="learn-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Czego dowiesz się ze szkolenia</h2>
+                    <p class="section-subtitle">
+                        Kompleksowy program obejmujący wszystkie aspekty tworzenia aplikacji z AI
+                    </p>
+                </div>
+                
+                <div class="learn-content">
+                    <div class="learn-intro">
+                        <h3 class="learn-intro-title">Po ukończeniu części teoretycznej kursu dowiesz się:</h3>
+                    </div>
+                    
+                    <div class="learn-list">
+                        <div class="learn-item">
+                            <div class="learn-item-icon">💡</div>
+                            <div class="learn-item-content">
+                                <h4 class="learn-item-title">Podstawy programowania</h4>
+                                <p class="learn-item-description">
+                                    Jakie są podstawy programowania i co trzeba wiedzieć, aby stworzyć i uruchomić własną aplikację
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="learn-item">
+                            <div class="learn-item-icon">🛠️</div>
+                            <div class="learn-item-content">
+                                <h4 class="learn-item-title">Narzędzia 2025</h4>
+                                <p class="learn-item-description">
+                                    Jakie są narzędzia do tworzenia aplikacji w 2025 oraz narzędzia, które będą pisać za Ciebie kod
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="learn-item">
+                            <div class="learn-item-icon">🌐</div>
+                            <div class="learn-item-content">
+                                <h4 class="learn-item-title">Aplikacja webowa od A do Z</h4>
+                                <p class="learn-item-description">
+                                    Jak stworzyć własną aplikację webową od pomysłu po wdrożenie jej do internetu pod własną domeną www
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="learn-item">
+                            <div class="learn-item-icon">🤖</div>
+                            <div class="learn-item-content">
+                                <h4 class="learn-item-title">Implementacja AI</h4>
+                                <p class="learn-item-description">
+                                    Jak zaimplementować sztuczną inteligencję do Twojej aplikacji
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="learn-practice">
+                        <div class="learn-practice-icon">🎯</div>
+                        <div class="learn-practice-content">
+                            <h4 class="learn-practice-title">Część praktyczna</h4>
+                            <p class="learn-practice-description">
+                                Dodatkowo praktyczna część kursu przeprowadzi Cię przez cały proces tworzenia własnej aplikacji
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Requirements Section -->
+        <section id="requirements" class="requirements-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Wymogi Formalne Dofinansowania UE</h2>
+                    <p class="section-subtitle">
+                        Sprawdź, czy spełniasz wymagania do otrzymania dofinansowania
+                    </p>
+                </div>
+                
+                <div class="requirements-card">
+                    <ul class="requirements-list">
+                        <li class="requirement-item">
+                            <span class="requirement-label">Lokalizacja:</span>
+                            <span class="requirement-value">Mieszkaniec powiatu częstochowskiego</span>
+                        </li>
+                        <li class="requirement-item">
+                            <span class="requirement-label">Wiek:</span>
+                            <span class="requirement-value">Minimum 18 lat</span>
+                        </li>
+                        <li class="requirement-item">
+                            <span class="requirement-label">Wykształcenie:</span>
+                            <span class="requirement-value">Maksymalnie średnie</span>
+                        </li>
+                        <li class="requirement-item">
+                            <span class="requirement-label">Działalność gospodarcza:</span>
+                            <span class="requirement-value">Brak</span>
+                        </li>
+                        <li class="requirement-item">
+                            <span class="requirement-label">ZUS:</span>
+                            <span class="requirement-value">Brak zaległych składek w ZUS</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Locations Section -->
+        <section id="locations" class="locations-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Lokalizacja szkolenia</h2>
+                    <p class="section-subtitle">
+                        Szkolenie odbywa się w Częstochowie
+                    </p>
+                </div>
+                
+                <div class="location-container">
+                    <div class="location-content">
+                        <div class="location-icon-wrapper">
+                            <img src="images/trawers-logo.png" alt="Trawers-Adr Logo" class="location-logo">
+                        </div>
+                        <div class="location-main-info">
+                            <h3 class="location-name">Trawers-Adr</h3>
+                            <p class="location-city">Częstochowa</p>
+                            <p class="location-street">ul. Kilińskiego 16 lokal 17</p>
+                            <p class="location-note">(w podwórzu)</p>
+                        </div>
+                    </div>
+                    <div class="location-features">
+                        <span class="feature">Parking</span>
+                        <span class="feature">Sprzęt</span>
+                        <span class="feature">Kawa i poczęstunek</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <div class="cta-content">
+                    <h2 class="cta-title">Gotowy na przyszłość?</h2>
+                    <p class="cta-subtitle">
+                        Dołącz do grona ekspertów AI i stwórz aplikacje, które zmienią świat
+                    </p>
+                    <a href="#home" class="cta-btn">Zapisz się teraz</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3 class="footer-title">TRAWERS-ADR</h3>
+                    <p class="footer-description">
+                        Lider w szkoleniach z tworzenia aplikacji wykorzystujących sztuczną inteligencję.
+                    </p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 TRAWERS-ADR. Wszystkie prawa zastrzeżone.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Obsługa formularza zapisów
+        document.getElementById('registrationForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const form = e.target;
+            const submitBtn = form.querySelector('.submit-btn');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const originalText = btnText.textContent;
+            
+            // Pobieranie danych z formularza
+            const formData = {
+                fullName: form.querySelector('#fullName').value.trim(),
+                email: form.querySelector('#email').value.trim(),
+                phone: form.querySelector('#phone').value.trim(),
+            };
+            
+            // Walidacja
+            if (!formData.fullName || !formData.email || !formData.phone) {
+                alert('Wszystkie pola są wymagane');
+                return;
+            }
+            
+            // Zmiana stanu przycisku
+            submitBtn.classList.add('loading');
+            btnText.textContent = 'Wysyłanie...';
+            submitBtn.disabled = true;
+            
+            try {
+                const response = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok && result.success) {
+                    // Sukces
+                    btnText.textContent = '✓ Wysłano!';
+                    form.reset();
+                    
+                    // Pokazanie komunikatu sukcesu
+                    alert('Dziękujemy! Twoje zgłoszenie zostało przyjęte. Wkrótce skontaktujemy się z Tobą.');
+                    
+                    // Reset przycisku po 3 sekundach
+                    setTimeout(() => {
+                        btnText.textContent = originalText;
+                        submitBtn.classList.remove('loading');
+                        submitBtn.disabled = false;
+                    }, 3000);
+                } else {
+                    // Błąd
+                    alert(result.error || 'Wystąpił błąd podczas wysyłania formularza. Spróbuj ponownie.');
+                    btnText.textContent = originalText;
+                    submitBtn.classList.remove('loading');
+                    submitBtn.disabled = false;
+                }
+            } catch (error) {
+                console.error('Błąd:', error);
+                alert('Wystąpił błąd połączenia. Sprawdź swoje połączenie internetowe i spróbuj ponownie.');
+                btnText.textContent = originalText;
+                submitBtn.classList.remove('loading');
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html> 

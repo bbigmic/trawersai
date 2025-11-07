@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Administracyjny - TRAWERS-ADR</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .admin-container {
+            max-width: 1200px;
+            margin: 120px auto 50px;
+            padding: var(--spacing-lg);
+        }
+
+        .admin-header {
+            background: var(--background-primary);
+            padding: var(--spacing-2xl);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            margin-bottom: var(--spacing-2xl);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-title {
+            font-size: var(--font-size-3xl);
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .logout-btn {
+            background: var(--background-secondary);
+            color: var(--text-primary);
+            border: 2px solid var(--border-color);
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition-fast);
+        }
+
+        .logout-btn:hover {
+            background: var(--border-color);
+        }
+
+        .login-container {
+            max-width: 400px;
+            margin: 150px auto;
+            padding: var(--spacing-lg);
+        }
+
+        .login-card {
+            background: var(--background-primary);
+            padding: var(--spacing-3xl);
+            border-radius: var(--radius-2xl);
+            box-shadow: var(--shadow-xl);
+            border: 1px solid var(--border-light);
+        }
+
+        .login-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 600;
+            margin-bottom: var(--spacing-lg);
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .stat-card {
+            background: var(--background-primary);
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: var(--font-size-3xl);
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: var(--font-size-sm);
+        }
+
+        .registrations-table {
+            background: var(--background-primary);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+
+        .table-header {
+            background: var(--background-secondary);
+            padding: var(--spacing-lg);
+            font-weight: 600;
+            color: var(--text-primary);
+            border-bottom: 2px solid var(--border-light);
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: var(--background-secondary);
+        }
+
+        th {
+            padding: var(--spacing-md);
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-primary);
+            border-bottom: 2px solid var(--border-light);
+        }
+
+        td {
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--border-light);
+            color: var(--text-secondary);
+        }
+
+        tr:hover {
+            background: var(--background-secondary);
+        }
+
+        .loading {
+            text-align: center;
+            padding: var(--spacing-3xl);
+            color: var(--text-secondary);
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .no-data {
+            text-align: center;
+            padding: var(--spacing-3xl);
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-container">
+        <div class="login-card">
+            <h2 class="login-title">Panel Administracyjny</h2>
+            <form id="loginForm" class="registration-form">
+                <div class="form-group">
+                    <label for="password" class="form-label">Hasło</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        class="form-input" 
+                        required
+                        placeholder="Wprowadź hasło"
+                    >
+                </div>
+                <button type="submit" class="submit-btn">
+                    <span class="btn-text">Zaloguj się</span>
+                </button>
+            </form>
+            <div id="loginError" class="error" style="display: none; margin-top: var(--spacing-lg);"></div>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div id="adminPanel" style="display: none;">
+        <div class="admin-container">
+            <div class="admin-header">
+                <h1 class="admin-title">Zapisy na szkolenie</h1>
+                <button class="logout-btn" onclick="logout()">Wyloguj się</button>
+            </div>
+
+            <div id="errorMessage" class="error" style="display: none;"></div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalRegistrations">0</div>
+                    <div class="stat-label">Łącznie zapisów</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="todayRegistrations">0</div>
+                    <div class="stat-label">Dzisiaj</div>
+                </div>
+            </div>
+
+            <div class="registrations-table">
+                <div class="table-header">Lista zapisów</div>
+                <div class="table-container">
+                    <div id="loading" class="loading">Ładowanie danych...</div>
+                    <table id="registrationsTable" style="display: none;">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Imię i nazwisko</th>
+                                <th>Email</th>
+                                <th>Telefon</th>
+                                <th>Data zapisu</th>
+                            </tr>
+                        </thead>
+                        <tbody id="registrationsBody">
+                        </tbody>
+                    </table>
+                    <div id="noData" class="no-data" style="display: none;">
+                        Brak zapisów
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let adminToken = null;
+
+        // Login
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('loginError');
+
+            try {
+                const response = await fetch('/api/admin/auth', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ password }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    adminToken = data.token;
+                    document.getElementById('loginScreen').style.display = 'none';
+                    document.getElementById('adminPanel').style.display = 'block';
+                    loadRegistrations();
+                } else {
+                    errorDiv.textContent = data.error || 'Błąd logowania';
+                    errorDiv.style.display = 'block';
+                }
+            } catch (error) {
+                errorDiv.textContent = 'Wystąpił błąd połączenia';
+                errorDiv.style.display = 'block';
+            }
+        });
+
+        // Load registrations
+        async function loadRegistrations() {
+            const loading = document.getElementById('loading');
+            const table = document.getElementById('registrationsTable');
+            const tbody = document.getElementById('registrationsBody');
+            const noData = document.getElementById('noData');
+            const errorDiv = document.getElementById('errorMessage');
+
+            loading.style.display = 'block';
+            table.style.display = 'none';
+            noData.style.display = 'none';
+            errorDiv.style.display = 'none';
+
+            try {
+                const response = await fetch('/api/admin/registrations', {
+                    headers: {
+                        'Authorization': `Bearer ${adminToken}`,
+                    },
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    const registrations = result.data || [];
+                    
+                    // Stats
+                    document.getElementById('totalRegistrations').textContent = registrations.length;
+                    
+                    const today = new Date().toISOString().split('T')[0];
+                    const todayCount = registrations.filter(r => {
+                        const regDate = new Date(r.created_at).toISOString().split('T')[0];
+                        return regDate === today;
+                    }).length;
+                    document.getElementById('todayRegistrations').textContent = todayCount;
+
+                    // Table
+                    if (registrations.length > 0) {
+                        tbody.innerHTML = registrations.map(reg => `
+                            <tr>
+                                <td>${reg.id}</td>
+                                <td>${reg.full_name}</td>
+                                <td><a href="mailto:${reg.email}">${reg.email}</a></td>
+                                <td><a href="tel:${reg.phone}">${reg.phone}</a></td>
+                                <td>${new Date(reg.created_at).toLocaleString('pl-PL')}</td>
+                            </tr>
+                        `).join('');
+                        table.style.display = 'table';
+                    } else {
+                        noData.style.display = 'block';
+                    }
+                } else {
+                    errorDiv.textContent = result.error || 'Błąd pobierania danych';
+                    errorDiv.style.display = 'block';
+                }
+            } catch (error) {
+                errorDiv.textContent = 'Wystąpił błąd połączenia';
+                errorDiv.style.display = 'block';
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        // Logout
+        function logout() {
+            adminToken = null;
+            document.cookie = 'admin_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+            document.getElementById('loginScreen').style.display = 'block';
+            document.getElementById('adminPanel').style.display = 'none';
+            document.getElementById('loginForm').reset();
+        }
+
+        // Auto-refresh co 30 sekund
+        setInterval(() => {
+            if (adminToken && document.getElementById('adminPanel').style.display !== 'none') {
+                loadRegistrations();
+            }
+        }, 30000);
+    </script>
+</body>
+</html>
+
