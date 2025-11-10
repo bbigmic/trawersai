@@ -217,6 +217,8 @@
                                 <th>Email</th>
                                 <th>Telefon</th>
                                 <th>Data zapisu</th>
+                                <th>Status</th>
+                                <th>Akcje</th>
                             </tr>
                         </thead>
                         <tbody id="registrationsBody">
@@ -309,6 +311,16 @@
                                 <td><a href="mailto:${reg.email}">${reg.email}</a></td>
                                 <td><a href="tel:${reg.phone}">${reg.phone}</a></td>
                                 <td>${new Date(reg.created_at).toLocaleString('pl-PL')}</td>
+                                <td>
+                                    <select data-id="${reg.id}" class="form-input" onchange="changeStatus(event)">
+                                        <option value="w trakcie" ${reg.status === 'w trakcie' ? 'selected' : ''}>w trakcie</option>
+                                        <option value="zakwalifikowany" ${reg.status === 'zakwalifikowany' ? 'selected' : ''}>zakwalifikowany</option>
+                                        <option value="niezakwalifikowany" ${reg.status === 'niezakwalifikowany' ? 'selected' : ''}>niezakwalifikowany</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <button class="logout-btn" onclick="saveStatus(${reg.id})">Zapisz</button>
+                                </td>
                             </tr>
                         `).join('');
                         table.style.display = 'table';
@@ -334,6 +346,38 @@
             document.getElementById('loginScreen').style.display = 'block';
             document.getElementById('adminPanel').style.display = 'none';
             document.getElementById('loginForm').reset();
+        }
+
+        // Zmiana statusu - onChange (opcjonalny hook)
+        function changeStatus(e) {
+            // pozostawiamy tylko zmianę UI; zapis po kliknięciu "Zapisz"
+        }
+
+        // Zapis statusu (PATCH)
+        async function saveStatus(id) {
+            const selectEl = document.querySelector(`select[data-id="${id}"]`);
+            if (!selectEl) return;
+            const status = selectEl.value;
+
+            try {
+                const response = await fetch('/api/admin/registrations', {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${adminToken}`,
+                    },
+                    body: JSON.stringify({ id, status }),
+                });
+                const result = await response.json();
+                if (!response.ok || !result.success) {
+                    alert(result.error || 'Nie udało się zaktualizować statusu');
+                    return;
+                }
+                // odśwież listę
+                loadRegistrations();
+            } catch (err) {
+                alert('Błąd połączenia podczas zapisu statusu');
+            }
         }
 
         // Auto-refresh co 30 sekund

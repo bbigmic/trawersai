@@ -18,6 +18,20 @@ CREATE INDEX IF NOT EXISTS idx_registrations_email ON registrations(email);
 -- Dodaj komentarz do tabeli
 COMMENT ON TABLE registrations IS 'Tabela przechowująca zapisy na szkolenie';
 
+-- Dodaj kolumnę status (jeśli nie istnieje)
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1
+        FROM information_schema.columns
+        WHERE table_name='registrations' AND column_name='status'
+    ) THEN
+        EXECUTE 'ALTER TABLE registrations ADD COLUMN status TEXT NOT NULL DEFAULT ''w trakcie''';
+        EXECUTE 'COMMENT ON COLUMN registrations.status IS ''Status zgłoszenia: w trakcie/zakwalifikowany/niezakwalifikowany''';
+        EXECUTE 'CREATE INDEX IF NOT EXISTS idx_registrations_status ON registrations(status)';
+    END IF;
+END $$;
+
 -- Opcjonalnie: Utwórz RLS (Row Level Security) jeśli chcesz zabezpieczyć dane
 -- ALTER TABLE registrations ENABLE ROW LEVEL SECURITY;
 

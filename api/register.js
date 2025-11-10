@@ -86,6 +86,7 @@ export default async function handler(req, res) {
           email: email,
           phone: phone,
           created_at: new Date().toISOString(),
+          status: 'w trakcie',
         },
       ])
       .select();
