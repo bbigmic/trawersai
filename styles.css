@@ -165,24 +165,95 @@ body {
     width: 100%;
 }
 
+/* EU Funding Banner */
+.eu-banner {
+    background-color: #ffffff;
+    border-bottom: 1px solid var(--border-light);
+    padding: var(--spacing-sm) 0;
+    position: relative;
+    z-index: 999;
+    margin-top: 70px; /* Header height */
+}
+
+.eu-banner-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.eu-banner-image {
+    width: 100%;
+    max-width: 1200px;
+    height: auto;
+    display: block;
+    object-fit: contain;
+}
+
 /* Hero Section */
 .hero {
     padding-top: 120px;
     padding-bottom: var(--spacing-4xl);
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    background-color: #e2e8f0; /* Placeholder color matching image background - prevents CLS */
+    background-image: url('images/hero-background.webp');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* Parallax effect */
     min-height: 100vh;
     display: flex;
     align-items: center;
+    position: relative;
+}
+
+/* Modern browser support for AVIF format */
+@supports (background-image: image-set(url('images/hero-background.avif') type('image/avif'))) {
+    .hero {
+        background-image: 
+            image-set(
+                url('images/hero-background.avif') type('image/avif'),
+                url('images/hero-background.webp') type('image/webp'),
+                url('images/hero-background.jpg') type('image/jpeg')
+            );
+    }
+}
+
+/* Fallback for older browsers */
+@supports not (background-image: image-set(url('images/hero-background.webp') type('image/webp'))) {
+    .hero {
+        background-image: url('images/hero-background.jpg');
+    }
+}
+
+/* Overlay for better text readability - gradient from left to right */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.85) 50%, rgba(255, 255, 255, 0.3) 100%);
+    z-index: 0;
 }
 
 .hero-container {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 0 var(--spacing-lg);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-4xl);
-    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-content-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3xl);
+    text-align: center;
 }
 
 .hero-title {
@@ -191,6 +262,7 @@ body {
     line-height: 1.1;
     margin-bottom: var(--spacing-lg);
     color: var(--text-primary);
+    text-align: center;
 }
 
 .gradient-text {
@@ -205,9 +277,20 @@ body {
     color: var(--text-secondary);
     margin-bottom: var(--spacing-2xl);
     line-height: 1.6;
+    text-align: center;
 }
 
+.hero-form {
+    max-width: 100%;
+    margin: 0 auto;
+}
 
+/* Limit form width on desktop to not cover the human hand on the right */
+@media (min-width: 769px) {
+    .hero-form {
+        max-width: 550px;
+    }
+}
 
 /* Form Card */
 .form-card {
@@ -756,14 +839,47 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    /* EU Banner mobile optimization */
+    .eu-banner {
+        padding: var(--spacing-xs) 0;
+    }
+    
+    .eu-banner-container {
+        padding: 0 var(--spacing-md);
+    }
+    
+    .eu-banner-image {
+        max-width: 100%;
+    }
+    
+    /* Optimize hero background for mobile - disable fixed attachment for better performance */
+    .hero {
+        background-attachment: scroll;
+        padding-top: 100px;
+        padding-bottom: var(--spacing-3xl);
+    }
+    
+    /* Gradient overlay for mobile - more transparent to show image */
+    .hero::before {
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.7) 50%, rgba(255, 255, 255, 0.5) 100%);
+    }
+    
     .hero-container {
-        grid-template-columns: 1fr;
+        padding: 0 var(--spacing-md);
+    }
+    
+    .hero-content-wrapper {
+        max-width: 100%;
         gap: var(--spacing-2xl);
-        text-align: center;
     }
     
     .hero-title {
         font-size: var(--font-size-4xl);
+        text-align: center;
+    }
+    
+    .hero-subtitle {
+        text-align: center;
     }
     
 

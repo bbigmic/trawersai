@@ -9,6 +9,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Preload images for faster loading - Above the Fold content -->
+    <link rel="preload" as="image" href="images/eu-funding-banner.webp" type="image/webp" fetchpriority="high">
+    <link rel="preload" as="image" href="images/hero-background.webp" type="image/webp" fetchpriority="high">
+    <link rel="preload" as="image" href="images/hero-background.jpg" type="image/jpeg" fetchpriority="high">
 </head>
 <body>
     <header class="header">
@@ -30,20 +34,36 @@
     </header>
 
     <main>
+        <!-- EU Funding Banner -->
+        <section class="eu-banner">
+            <div class="eu-banner-container">
+                <picture>
+                    <source srcset="images/eu-funding-banner.avif" type="image/avif">
+                    <source srcset="images/eu-funding-banner.webp" type="image/webp">
+                    <img src="images/eu-funding-banner.jpg" 
+                         alt="Dofinansowane przez Unię Europejską - Fundusze Europejskie dla Śląskiego"
+                         class="eu-banner-image"
+                         loading="eager"
+                         fetchpriority="high">
+                </picture>
+            </div>
+        </section>
+
         <!-- Hero Section -->
         <section id="home" class="hero">
             <div class="hero-container">
-                <div class="hero-content">
-                    <h1 class="hero-title">
-                        Stwórz aplikacje z <span class="gradient-text">AI</span>
-                    </h1>
-                    <p class="hero-subtitle">
-                        Dołącz do ekskluzywnego szkolenia i zostań ekspertem w tworzeniu inteligentnych aplikacji. 
-                        Naucz się najnowszych technologii AI w praktyce.
-                    </p>
-                </div>
-                <div class="hero-form">
-                    <div class="form-card">
+                <div class="hero-content-wrapper">
+                    <div class="hero-content">
+                        <h1 class="hero-title">
+                            Stwórz aplikacje z <span class="gradient-text">AI</span>
+                        </h1>
+                        <p class="hero-subtitle">
+                            Dołącz do ekskluzywnego szkolenia i zostań ekspertem w tworzeniu inteligentnych aplikacji. 
+                            Naucz się najnowszych technologii AI w praktyce.
+                        </p>
+                    </div>
+                    <div class="hero-form">
+                        <div class="form-card">
                         <h2 class="form-title">Zapisz się na szkolenie</h2>
                         <p class="form-subtitle">Otrzymaj 95% zniżki dzięki dofinansowaniu z Unii Europejskiej!</p>
                         
@@ -203,6 +223,10 @@
                             <span class="requirement-label">ZUS:</span>
                             <span class="requirement-value">Brak zaległych składek w ZUS</span>
                         </li>
+                        <li class="requirement-item">
+                            <span class="requirement-label">Świadectwo szkolne:</span>
+                            <span class="requirement-value">Ostatniej ukończonej szkoły</span>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -309,19 +333,8 @@
                 const result = await response.json();
                 
                 if (response.ok && result.success) {
-                    // Sukces
-                    btnText.textContent = '✓ Wysłano!';
-                    form.reset();
-                    
-                    // Pokazanie komunikatu sukcesu
-                    alert('Dziękujemy! Twoje zgłoszenie zostało przyjęte. Wkrótce skontaktujemy się z Tobą.');
-                    
-                    // Reset przycisku po 3 sekundach
-                    setTimeout(() => {
-                        btnText.textContent = originalText;
-                        submitBtn.classList.remove('loading');
-                        submitBtn.disabled = false;
-                    }, 3000);
+                    // Sukces → przekierowanie na stronę sukcesu
+                    window.location.href = '/success.html';
                 } else {
                     // Błąd
                     alert(result.error || 'Wystąpił błąd podczas wysyłania formularza. Spróbuj ponownie.');

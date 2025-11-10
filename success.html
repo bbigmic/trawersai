@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dziękujemy! Zgłoszenie przyjęte</title>
+  <meta name="description" content="Twoje zgłoszenie zostało przyjęte. Postępuj zgodnie z instrukcją i wypełnij fiszkę.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f1a;
+      --card: #111827;
+      --muted: #94a3b8;
+      --text: #e5e7eb;
+      --accent: #7c3aed;
+      --accent-2: #06b6d4;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --border: rgba(255,255,255,0.08);
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(1200px 800px at 20% -10%, rgba(124,58,237,.25), transparent 60%),
+                  radial-gradient(1000px 700px at 90% 10%, rgba(6,182,212,.20), transparent 60%),
+                  var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      line-height: 1.6;
+    }
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    .hero {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: 1fr;
+      align-items: start;
+    }
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      color: #10b981;
+      background: rgba(16,185,129,.12);
+      border: 1px solid rgba(16,185,129,.22);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      letter-spacing: .2px;
+    }
+    h1 {
+      margin: 12px 0 8px 0;
+      font-size: clamp(26px, 4vw, 36px);
+      line-height: 1.2;
+      font-weight: 800;
+    }
+    .subtitle {
+      color: var(--muted);
+      font-size: 15px;
+      margin-bottom: 2px;
+    }
+    .cta {
+      display: grid;
+      gap: 16px;
+    }
+    .cta .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 14px 18px;
+      font-size: 16px;
+      font-weight: 700;
+      color: white;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border: none;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: transform .15s ease, box-shadow .15s ease, opacity .2s ease;
+      box-shadow: 0 8px 24px rgba(124,58,237,.35);
+    }
+    .btn-primary:hover { transform: translateY(-1px); opacity: .98; }
+    .btn-primary:active { transform: translateY(0); }
+    .support {
+      border: 1px dashed rgba(255,255,255,0.18);
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.03);
+      display: grid;
+      gap: 8px;
+    }
+    .phone {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: clamp(18px, 3.2vw, 22px);
+      color: #fefefe;
+      text-decoration: none;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: rgba(34,197,94,.16);
+      border: 1px solid rgba(34,197,94,.25);
+      width: fit-content;
+    }
+    .help-text { color: var(--text); font-weight: 600; }
+    .help-sub { color: var(--muted); font-size: 14px; }
+    .steps {
+      display: grid;
+      gap: 16px;
+      margin-top: 6px;
+    }
+    .step {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+    }
+    .step h3 {
+      margin: 0 0 8px 0;
+      font-size: 16px;
+    }
+    .step p, .step ul { margin: 0; color: var(--muted); font-size: 14px; }
+    .list {
+      margin: 8px 0 0 16px;
+      display: grid;
+      gap: 6px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+      margin-top: 18px;
+    }
+    @media (min-width: 860px) {
+      .hero { grid-template-columns: 1.1fr .9fr; gap: 24px; }
+      .grid { grid-template-columns: 1fr 1fr; }
+      .cta .btn-primary { width: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <section class="card">
+        <span class="badge">✓ Zgłoszenie przyjęte</span>
+        <h1>Dziękujemy! Co dalej?</h1>
+        <p class="subtitle">Wysłaliśmy Ci maila z tą samą instrukcją. Możesz działać od razu:</p>
+        <div class="cta">
+          <a class="btn-primary" href="https://www.rozwojowe.eu/psf9/aplikuj/" target="_blank" rel="noopener">Wypełnij fiszkę teraz →</a>
+          <div class="support">
+            <div class="help-text">Wypełnij fiszkę z naszą pomocą</div>
+            <a class="phone" href="tel:+48500800800">📞 +48 500 800 800</a>
+            <div class="help-sub">Zadzwoń, jeśli utkniesz — przejdziemy proces razem.</div>
+          </div>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <h3>1. Wypełnij fiszkę</h3>
+            <p>1.1 Na stronie fiszki uwzględnij poniższe odpowiedzi:</p>
+            <ul class="list">
+              <li>PKT. 1–8: wpisz swoje dane</li>
+              <li>PKT. 9: <strong>NIE</strong></li>
+              <li>PKT. 10: <strong>NIE</strong></li>
+              <li>PKT. 11: <strong>NIE POTRZEBUJĘ...</strong></li>
+              <li>PKT. 12: zaznacz <strong>TAK</strong>, jeśli:
+                masz wykształcenie średnie lub niższe (i masz świadectwo),
+                lub posiadasz zaświadczenie o niepełnosprawności,
+                lub jesteś zarejestrowany jako bezrobotny,
+                lub masz więcej niż 55 lat.</li>
+              <li>PKT. 14: zaznacz <strong>TAK</strong></li>
+            </ul>
+            <p style="margin-top:10px;">1.2 Prześlij fiszkę.</p>
+          </div>
+
+          <div class="step">
+            <h3>2. Sprawdź maila</h3>
+            <p>W ciągu ok. 3 minut otrzymasz na maila gotową fiszką zwrotną. Pobierz ją na swój dysk.</p>
+          </div>
+
+          <div class="step">
+            <h3>3. Podpisz elektronicznie fiszkę zwrotną</h3>
+            <ul class="list">
+              <li>3.1 Wejdź na stronę: <a href="https://www.gov.pl/web/gov/podpisz-dokument-elektronicznie-wykorzystaj-podpis-zaufany" target="_blank" rel="noopener">Podpisz dokument podpisem zaufanym</a></li>
+              <li>3.2 Kliknij <strong>Start</strong></li>
+              <li>3.3 Wybierz drugą opcję: <em>Chcesz podpisać dokument PDF</em></li>
+              <li>3.4 Kliknij <strong>Podpisz lub sprawdź dokument PDF</strong></li>
+              <li>3.5 Wybierz pobraną fiszkę zwrotną z dysku</li>
+              <li>3.6 Kliknij <strong>Podpisz</strong></li>
+              <li>3.7 Podpisz Profilem Zaufanym (lub inną dostępną metodą)</li>
+              <li>3.8 Pobierz podpisaną fiszkę</li>
+            </ul>
+          </div>
+
+          <div class="step">
+            <h3>4. Zweryfikuj podpis</h3>
+            <p>Sprawdź, czy w prawym górnym rogu dokumentu widzisz pieczątkę z Twoim podpisem.</p>
+          </div>
+
+          <div class="step">
+            <h3>5. Odeślij podpisany dokument</h3>
+            <p>Wyślij podpisaną fiszkę na adres e-mail podany w wiadomości z pkt. 2. W treści dodaj: <em>„Proszę o pozytywne rozpatrzenie wniosku”.</em></p>
+          </div>
+        </div>
+      </section>
+
+      <aside class="card">
+        <h3 style="margin-top:0;">Masz pytania?</h3>
+        <p class="subtitle">Najszybciej pomożemy telefonicznie.</p>
+        <a class="phone" href="tel:+48500800800">📞 +48 500 800 800</a>
+        <div style="height:12px;"></div>
+        <a class="btn-primary" href="https://www.rozwojowe.eu/psf9/aplikuj/" target="_blank" rel="noopener">Przejdź do fiszki →</a>
+      </aside>
+    </div>
+  </div>
+</body>
+</html>
+
