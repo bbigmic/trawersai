@@ -545,6 +545,7 @@
                     <td data-label="Status">
                         <select data-id="${reg.id}" class="form-input" onchange="changeStatus(event)">
                             <option value="w trakcie" ${reg.status === 'w trakcie' ? 'selected' : ''}>w trakcie</option>
+                            <option value="etap pierwszy ukończony" ${reg.status === 'etap pierwszy ukończony' ? 'selected' : ''}>etap pierwszy ukończony</option>
                             <option value="zakwalifikowany" ${reg.status === 'zakwalifikowany' ? 'selected' : ''}>zakwalifikowany</option>
                             <option value="niezakwalifikowany" ${reg.status === 'niezakwalifikowany' ? 'selected' : ''}>niezakwalifikowany</option>
                         </select>

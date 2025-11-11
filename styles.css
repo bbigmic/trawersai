@@ -568,6 +568,26 @@ body {
     font-size: var(--font-size-base);
 }
 
+.learn-practice-certificate {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF8C00 100%);
+    box-shadow: 0 10px 40px rgba(255, 215, 0, 0.4), 0 0 20px rgba(255, 215, 0, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    animation: certificateGlow 3s ease-in-out infinite;
+}
+
+.learn-practice-certificate::before {
+    background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 100%);
+}
+
+@keyframes certificateGlow {
+    0%, 100% {
+        box-shadow: 0 10px 40px rgba(255, 215, 0, 0.4), 0 0 20px rgba(255, 215, 0, 0.2);
+    }
+    50% {
+        box-shadow: 0 10px 50px rgba(255, 215, 0, 0.6), 0 0 30px rgba(255, 215, 0, 0.4);
+    }
+}
+
 /* Requirements Section */
 .requirements-section {
     padding: var(--spacing-4xl) 0;

@@ -77,7 +77,30 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Nieprawidłowy format emaila' });
     }
 
-    // Zapis do bazy danych Supabase
+    // Jeśli istnieje zapis dla tego telefonu lub emaila → użyj go
+    const { data: existing, error: findError } = await supabase
+      .from('registrations')
+      .select('*')
+      .or(`phone.eq.${phone},email.eq.${email}`)
+      .order('created_at', { ascending: false })
+      .limit(1);
+
+    if (findError) {
+      console.error('Błąd sprawdzania istnienia rekordu:', findError);
+    }
+
+    if (existing && existing.length > 0) {
+      const row = existing[0];
+      return res.status(200).json({
+        success: true,
+        message: 'Istniejący zapis – przekierowanie do strony sukcesu',
+        id: row.id,
+        status: row.status || null,
+        existed: true,
+      });
+    }
+
+    // Zapis do bazy danych Supabase (nowy rekord)
     const { data, error: dbError } = await supabase
       .from('registrations')
       .insert([
@@ -202,6 +225,7 @@ export default async function handler(req, res) {
       success: true,
       message: 'Zapis został zarejestrowany',
       id: data && data.length > 0 ? data[0].id : null,
+      status: 'w trakcie',
     });
   } catch (error) {
     console.error('Błąd serwera:', error);

@@ -14,6 +14,22 @@ CREATE TABLE IF NOT EXISTS registrations (
 -- Utwórz indeks dla szybkiego wyszukiwania
 CREATE INDEX IF NOT EXISTS idx_registrations_created_at ON registrations(created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_registrations_email ON registrations(email);
+-- Unikalność kontaktu (zapobiega duplikatom)
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_indexes 
+        WHERE schemaname = 'public' AND indexname = 'idx_registrations_phone_unique'
+    ) THEN
+        EXECUTE 'CREATE UNIQUE INDEX idx_registrations_phone_unique ON registrations(phone)';
+    END IF;
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_indexes 
+        WHERE schemaname = 'public' AND indexname = 'idx_registrations_email_unique'
+    ) THEN
+        EXECUTE 'CREATE UNIQUE INDEX idx_registrations_email_unique ON registrations(email)';
+    END IF;
+END $$;
 
 -- Dodaj komentarz do tabeli
 COMMENT ON TABLE registrations IS 'Tabela przechowująca zapisy na szkolenie';

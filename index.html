@@ -14,6 +14,9 @@
     <link rel="preload" as="image" href="images/hero-background.webp" type="image/webp" fetchpriority="high">
     <link rel="preload" as="image" href="images/hero-background.jpg" type="image/jpeg" fetchpriority="high">
 </head>
+    <style>
+        h1, h2, h3, h4, h5, h6 { text-transform: uppercase; }
+    </style>
 <body>
     <header class="header">
         <nav class="nav">
@@ -55,7 +58,7 @@
                 <div class="hero-content-wrapper">
                     <div class="hero-content">
                         <h1 class="hero-title">
-                            Stwórz aplikacje z <span class="gradient-text">AI</span>
+                            STWÓRZ APLIKACJE WEBOWE Z <span class="gradient-text">AI</span>
                         </h1>
                         <p class="hero-subtitle">
                             Dołącz do ekskluzywnego szkolenia i zostań ekspertem w tworzeniu inteligentnych aplikacji. 
@@ -125,7 +128,7 @@
         <section id="about" class="learn-section">
             <div class="container">
                 <div class="section-header">
-                    <h2 class="section-title">Czego dowiesz się ze szkolenia</h2>
+                    <h2 class="section-title">Czego dowiesz się na szkoleniu</h2>
                     <p class="section-subtitle">
                         Kompleksowy program obejmujący wszystkie aspekty tworzenia aplikacji z AI
                     </p>
@@ -184,6 +187,16 @@
                             <h4 class="learn-practice-title">Część praktyczna</h4>
                             <p class="learn-practice-description">
                                 Dodatkowo praktyczna część kursu przeprowadzi Cię przez cały proces tworzenia własnej aplikacji
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="learn-practice learn-practice-certificate" style="margin-top: 20px;">
+                        <div class="learn-practice-icon">🎓</div>
+                        <div class="learn-practice-content">
+                            <h4 class="learn-practice-title">Certyfikat uzyskania kwalifikacji</h4>
+                            <p class="learn-practice-description">
+                                Certyfikat, ktory da Ci nowoczesne kompetencje na rynku pracy
                             </p>
                         </div>
                     </div>
@@ -333,8 +346,17 @@
                 const result = await response.json();
                 
                 if (response.ok && result.success) {
-                    // Sukces → przekierowanie na stronę sukcesu
-                    window.location.href = '/success.html';
+                    // Sukces → przekierowanie na stronę sukcesu (z identyfikatorem i telefonem)
+                    try {
+                        if (result.id) sessionStorage.setItem('regId', String(result.id));
+                        sessionStorage.setItem('regPhone', formData.phone);
+                        if (result.status) sessionStorage.setItem('regStatus', String(result.status));
+                    } catch (_) {}
+                    const params = new URLSearchParams();
+                    if (result.id) params.set('id', result.id);
+                    params.set('phone', formData.phone);
+                    if (result.status) params.set('status', result.status);
+                    window.location.href = `/success.html?${params.toString()}`;
                 } else {
                     // Błąd
                     alert(result.error || 'Wystąpił błąd podczas wysyłania formularza. Spróbuj ponownie.');

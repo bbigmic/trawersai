@@ -54,7 +54,7 @@ export default async function handler(req, res) {
     // PATCH - aktualizacja statusu
     if (req.method === 'PATCH') {
       const { id, status } = req.body || {};
-      const allowed = ['w trakcie', 'zakwalifikowany', 'niezakwalifikowany'];
+      const allowed = ['w trakcie', 'zakwalifikowany', 'niezakwalifikowany', 'etap pierwszy ukończony'];
 
       if (!id || typeof id !== 'number') {
         return res.status(400).json({ error: 'Brak lub nieprawidłowe id' });
