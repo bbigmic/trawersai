@@ -708,6 +708,8 @@ body {
 
 .location-main-info {
     flex: 1;
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
 }
 
 .location-name {
@@ -737,9 +739,45 @@ body {
     font-style: italic;
 }
 
+.location-organizer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--border-light);
+}
+
+.location-organizer-details {
+    text-align: left;
+}
+
+.location-extra-title {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-xs);
+    text-transform: uppercase;
+}
+
+.location-extra-name {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-xs);
+}
+
+.location-extra-street,
+.location-extra-city {
+    color: var(--text-secondary);
+    font-size: var(--font-size-base);
+    line-height: 1.6;
+}
+
 .location-features {
     display: flex;
     flex-wrap: wrap;
+    margin-bottom: var(--spacing-xl);
     gap: var(--spacing-sm);
     justify-content: center;
 }
