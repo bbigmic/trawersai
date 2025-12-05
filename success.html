@@ -249,7 +249,7 @@
         
         <div class="step" style="margin-top:16px;">
           <h3>Potwierdź wykonanie pierwszego etapu</h3>
-          <p class="subtitle">Wpisz numer fiszki z punktu 2 oraz wybierz Twoją kategorię</p>
+          <p class="subtitle">Wpisz numer fiszki z punktu 2 oraz wpisz Twoją kategorię</p>
           <div class="cta">
             <div class="form-group" style="margin-bottom:16px;">
               <label for="fiszkaNumber" class="form-label" style="color:var(--text);font-weight:600;margin-bottom:8px;display:block;">Numer fiszki</label>
@@ -257,14 +257,7 @@
             </div>
             <div class="form-group" style="margin-bottom:16px;">
               <label for="category" class="form-label" style="color:var(--text);font-weight:600;margin-bottom:8px;display:block;">Kategoria</label>
-              <select id="category" class="form-input" style="width:100%;padding:12px 16px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:12px;color:var(--text);font-size:15px;cursor:pointer;">
-                <option value="">Wybierz kategorię</option>
-                <option value="wykształcenie średnie lub niższe">Wykształcenie średnie lub niższe</option>
-                <option value="zaświadczenie o niepełnosprawności">Zaświadczenie o niepełnosprawności</option>
-                <option value="zarejestrowany jako bezrobotny">Zarejestrowany jako bezrobotny</option>
-                <option value="więcej niż 55 lat">Więcej niż 55 lat</option>
-                <option value="inna">Inna</option>
-              </select>
+              <input id="category" type="text" class="form-input" placeholder="Wpisz kategorię" style="width:100%;padding:12px 16px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:12px;color:var(--text);font-size:15px;">
             </div>
             <button id="confirmBtn" class="btn-primary">Zapisz potwierdzenie</button>
             <div id="confirmMsg" class="subtitle" style="display:none;"></div>
