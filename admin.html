@@ -82,8 +82,8 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
-            padding: 8px 12px;
-            font-size: 12px;
+            padding: 10px 14px;
+            font-size: 13px;
             font-weight: 700;
             color: white;
             background: var(--gradient-primary);
@@ -114,13 +114,13 @@
             background: rgba(239,68,68,.16);
             color: #fecaca;
             border: 1px solid rgba(239,68,68,.25);
-            padding: 8px 12px;
+            padding: 10px 14px;
             border-radius: 8px;
             cursor: pointer;
             font-weight: 700;
             transition: var(--transition-fast);
             backdrop-filter: blur(6px);
-            font-size: 12px;
+            font-size: 13px;
         }
         .btn-danger:hover { 
             background: rgba(239,68,68,.25);
@@ -210,30 +210,29 @@
         }
 
         th {
-            padding: 8px 4px;
+            padding: 10px 6px;
             text-align: left;
             font-weight: 600;
             color: var(--text-primary);
             border-bottom: 1px solid var(--border);
-            font-size: 12px;
+            font-size: 14px;
             word-wrap: break-word;
         }
 
         th:nth-child(1) { width: 3%; } /* ID */
-        th:nth-child(2) { width: 11%; } /* Imię i nazwisko */
-        th:nth-child(3) { width: 14%; } /* Email */
-        th:nth-child(4) { width: 9%; } /* Telefon */
-        th:nth-child(5) { width: 9%; } /* Data zapisu */
-        th:nth-child(6) { width: 9%; } /* Numer fiszki */
-        th:nth-child(7) { width: 11%; } /* Kategoria */
-        th:nth-child(8) { width: 11%; } /* Status */
-        th:nth-child(9) { width: 13%; } /* Akcje */
+        th:nth-child(2) { width: 12%; } /* Imię i nazwisko */
+        th:nth-child(3) { width: 14%; } /* Kontakt */
+        th:nth-child(4) { width: 9%; } /* Data zapisu */
+        th:nth-child(5) { width: 9%; } /* Numer fiszki */
+        th:nth-child(6) { width: 12%; } /* Kategoria */
+        th:nth-child(7) { width: 12%; } /* Status */
+        th:nth-child(8) { width: 13%; } /* Akcje */
 
         td {
-            padding: 8px 4px;
+            padding: 10px 6px;
             border-bottom: 1px solid var(--border);
             color: var(--muted);
-            font-size: 12px;
+            font-size: 14px;
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
@@ -295,8 +294,8 @@
             background-position: right 0.5rem center;
             background-size: 1em 1em;
             padding-right: 1.75rem;
-            font-size: 12px;
-            padding: 6px 1.75rem 6px 8px;
+            font-size: 13px;
+            padding: 8px 1.75rem 8px 10px;
         }
         select.form-input:focus {
             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%237c3aed' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
@@ -314,18 +313,17 @@
         /* Tablet - zmniejsz padding i font */
         @media (max-width: 1024px) {
             th, td {
-                padding: 6px 3px;
-                font-size: 11px;
+                padding: 8px 4px;
+                font-size: 13px;
             }
             th:nth-child(1) { width: 3%; }
-            th:nth-child(2) { width: 11%; }
+            th:nth-child(2) { width: 12%; }
             th:nth-child(3) { width: 14%; }
             th:nth-child(4) { width: 9%; }
             th:nth-child(5) { width: 9%; }
-            th:nth-child(6) { width: 9%; }
-            th:nth-child(7) { width: 11%; }
-            th:nth-child(8) { width: 11%; }
-            th:nth-child(9) { width: 13%; }
+            th:nth-child(6) { width: 12%; }
+            th:nth-child(7) { width: 12%; }
+            th:nth-child(8) { width: 13%; }
         }
 
         /* Mobile table → cards */
@@ -394,7 +392,6 @@
 
             #registrationsTable td:last-child {
                 border-bottom: none;
-                padding-left: 0;
             }
 
             #registrationsTable td::before {
@@ -406,6 +403,19 @@
                 color: var(--text-primary);
                 width: 120px;
                 font-size: 12px;
+            }
+
+            #registrationsTable td[data-label="Akcje"] {
+                padding-left: 0;
+                padding-top: 40px;
+                display: block;
+            }
+
+            #registrationsTable td[data-label="Akcje"]::before {
+                top: 0;
+                left: 0;
+                position: absolute;
+                margin-bottom: 8px;
             }
 
             #registrationsTable td a {
@@ -423,10 +433,13 @@
             #registrationsTable td[data-label="Akcje"] > div {
                 flex-direction: column;
                 width: 100%;
+                margin-top: 0;
+                padding-top: 0;
             }
 
             #registrationsTable td[data-label="Akcje"] button {
                 width: 100%;
+                margin-top: 4px;
             }
 
             #pagination {
@@ -525,8 +538,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Imię i nazwisko</th>
-                                <th>Email</th>
-                                <th>Telefon</th>
+                                <th>Kontakt</th>
                                 <th>Data</th>
                                 <th>Fiszka</th>
                                 <th>Kategoria</th>
@@ -691,13 +703,17 @@
                 <tr>
                     <td data-label="ID">${reg.id}</td>
                     <td data-label="Imię i nazwisko"><strong>${reg.full_name}</strong></td>
-                    <td data-label="Email"><a href="mailto:${reg.email}">${reg.email}</a></td>
-                    <td data-label="Telefon"><a href="tel:${reg.phone}">${reg.phone}</a></td>
+                    <td data-label="Kontakt">
+                        <div style="display:flex;flex-direction:column;gap:4px;">
+                            <a href="mailto:${reg.email}" style="color:white;text-decoration:underline;text-underline-offset:2px;word-break:break-all;">${reg.email}</a>
+                            <a href="tel:${reg.phone}" style="color:white;text-decoration:underline;text-underline-offset:2px;">${reg.phone}</a>
+                        </div>
+                    </td>
                     <td data-label="Data">${dateStr}<br><small style="color:var(--muted);">${timeStr}</small></td>
                     <td data-label="Fiszka">${reg.fiszka_number || '-'}</td>
                     <td data-label="Kategoria">${reg.category || '-'}</td>
                     <td data-label="Status">
-                        <select data-id="${reg.id}" class="form-input" onchange="changeStatus(event)" style="font-size:11px;padding:6px 8px;">
+                        <select data-id="${reg.id}" class="form-input" onchange="changeStatus(event)">
                             <option value="w trakcie" ${reg.status === 'w trakcie' ? 'selected' : ''}>w trakcie</option>
                             <option value="etap pierwszy ukończony" ${reg.status === 'etap pierwszy ukończony' ? 'selected' : ''}>etap 1</option>
                             <option value="zakwalifikowany" ${reg.status === 'zakwalifikowany' ? 'selected' : ''}>zakwal.</option>
