@@ -48,6 +48,27 @@ BEGIN
     END IF;
 END $$;
 
+-- Dodaj kolumny fiszka_number i category (jeśli nie istnieją)
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1
+        FROM information_schema.columns
+        WHERE table_name='registrations' AND column_name='fiszka_number'
+    ) THEN
+        EXECUTE 'ALTER TABLE registrations ADD COLUMN fiszka_number TEXT';
+        EXECUTE 'COMMENT ON COLUMN registrations.fiszka_number IS ''Numer fiszki z punktu 2''';
+    END IF;
+    IF NOT EXISTS (
+        SELECT 1
+        FROM information_schema.columns
+        WHERE table_name='registrations' AND column_name='category'
+    ) THEN
+        EXECUTE 'ALTER TABLE registrations ADD COLUMN category TEXT';
+        EXECUTE 'COMMENT ON COLUMN registrations.category IS ''Kategoria zgłoszenia''';
+    END IF;
+END $$;
+
 -- Opcjonalnie: Utwórz RLS (Row Level Security) jeśli chcesz zabezpieczyć dane
 -- ALTER TABLE registrations ENABLE ROW LEVEL SECURITY;
 

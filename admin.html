@@ -102,6 +102,23 @@
         }
         .btn-ghost:hover { background: rgba(255,255,255,0.1); }
 
+        .btn-danger {
+            background: rgba(239,68,68,.16);
+            color: #fecaca;
+            border: 1px solid rgba(239,68,68,.25);
+            padding: 10px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: var(--transition-fast);
+            backdrop-filter: blur(6px);
+            font-size: 14px;
+        }
+        .btn-danger:hover { 
+            background: rgba(239,68,68,.25);
+            transform: translateY(-1px);
+        }
+
         .login-container {
             max-width: 400px;
             margin: 150px auto;
@@ -392,6 +409,8 @@
                                 <th>Email</th>
                                 <th>Telefon</th>
                                 <th>Data zapisu</th>
+                                <th>Numer fiszki</th>
+                                <th>Kategoria</th>
                                 <th>Status</th>
                                 <th>Akcje</th>
                             </tr>
@@ -552,6 +571,8 @@
                     <td data-label="Email"><a href="mailto:${reg.email}">${reg.email}</a></td>
                     <td data-label="Telefon"><a href="tel:${reg.phone}">${reg.phone}</a></td>
                     <td data-label="Data zapisu">${new Date(reg.created_at).toLocaleString('pl-PL')}</td>
+                    <td data-label="Numer fiszki">${reg.fiszka_number || '-'}</td>
+                    <td data-label="Kategoria">${reg.category || '-'}</td>
                     <td data-label="Status">
                         <select data-id="${reg.id}" class="form-input" onchange="changeStatus(event)">
                             <option value="w trakcie" ${reg.status === 'w trakcie' ? 'selected' : ''}>w trakcie</option>
@@ -561,7 +582,10 @@
                         </select>
                     </td>
                     <td data-label="Akcje">
-                        <button class="btn-primary" onclick="saveStatus(${reg.id})">Zapisz</button>
+                        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                            <button class="btn-primary" onclick="saveStatus(${reg.id})">Zapisz</button>
+                            <button class="btn-danger" onclick="deleteRegistration(${reg.id}, ${JSON.stringify(reg.full_name)})">Usuń</button>
+                        </div>
                     </td>
                 </tr>
             `).join('');
@@ -627,6 +651,33 @@
                 loadRegistrations();
             } catch (err) {
                 alert('Błąd połączenia podczas zapisu statusu');
+            }
+        }
+
+        // Usuwanie zapisu (DELETE)
+        async function deleteRegistration(id, fullName) {
+            if (!confirm(`Czy na pewno chcesz usunąć zapis dla: ${fullName}?\n\nTa operacja jest nieodwracalna.`)) {
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/admin/registrations', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${adminToken}`,
+                    },
+                    body: JSON.stringify({ id }),
+                });
+                const result = await response.json();
+                if (!response.ok || !result.success) {
+                    alert(result.error || 'Nie udało się usunąć zapisu');
+                    return;
+                }
+                // odśwież listę
+                loadRegistrations();
+            } catch (err) {
+                alert('Błąd połączenia podczas usuwania zapisu');
             }
         }
 

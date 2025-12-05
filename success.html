@@ -219,7 +219,7 @@
 
           <div class="step">
             <h3>2. Sprawdź maila</h3>
-            <p>W ciągu ok. 3 minut otrzymasz na maila gotową fiszką zwrotną. Pobierz ją na swój dysk.</p>
+            <p>W ciągu ok. 3 minut otrzymasz na maila gotową fiszką zwrotną. Pobierz ją na swój dysk. Zanotuj numer fiszki. Znajdziesz go w tytule otrzymanego maila.</p>
           </div>
 
           <div class="step">
@@ -249,12 +249,23 @@
         
         <div class="step" style="margin-top:16px;">
           <h3>Potwierdź wykonanie pierwszego etapu</h3>
-          <p class="subtitle">Zaznacz poniżej, gdy już wysłałeś fiszkę.</p>
+          <p class="subtitle">Wpisz numer fiszki z punktu 2 oraz wybierz Twoją kategorię</p>
           <div class="cta">
-            <label style="display:flex;align-items:center;gap:10px;">
-              <input id="confirmCheckbox" type="checkbox" style="width:18px;height:18px;">
-              <span>Potwierdzam, że wypełniłem i wysłałem podpisaną fiszkę</span>
-            </label>
+            <div class="form-group" style="margin-bottom:16px;">
+              <label for="fiszkaNumber" class="form-label" style="color:var(--text);font-weight:600;margin-bottom:8px;display:block;">Numer fiszki</label>
+              <input id="fiszkaNumber" type="text" class="form-input" placeholder="Wpisz numer fiszki" style="width:100%;padding:12px 16px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:12px;color:var(--text);font-size:15px;">
+            </div>
+            <div class="form-group" style="margin-bottom:16px;">
+              <label for="category" class="form-label" style="color:var(--text);font-weight:600;margin-bottom:8px;display:block;">Kategoria</label>
+              <select id="category" class="form-input" style="width:100%;padding:12px 16px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:12px;color:var(--text);font-size:15px;cursor:pointer;">
+                <option value="">Wybierz kategorię</option>
+                <option value="wykształcenie średnie lub niższe">Wykształcenie średnie lub niższe</option>
+                <option value="zaświadczenie o niepełnosprawności">Zaświadczenie o niepełnosprawności</option>
+                <option value="zarejestrowany jako bezrobotny">Zarejestrowany jako bezrobotny</option>
+                <option value="więcej niż 55 lat">Więcej niż 55 lat</option>
+                <option value="inna">Inna</option>
+              </select>
+            </div>
             <button id="confirmBtn" class="btn-primary">Zapisz potwierdzenie</button>
             <div id="confirmMsg" class="subtitle" style="display:none;"></div>
           </div>
@@ -288,7 +299,8 @@
       } catch (_) {}
     }
 
-    const checkbox = document.getElementById('confirmCheckbox');
+    const fiszkaNumberInput = document.getElementById('fiszkaNumber');
+    const categorySelect = document.getElementById('category');
     const btn = document.getElementById('confirmBtn');
     const msg = document.getElementById('confirmMsg');
 
@@ -300,12 +312,11 @@
     // Jeśli status wskazuje, że etap ukończony — zablokuj UI
     (function initStatusUI() {
       if ((status || '').toLowerCase() === 'etap pierwszy ukończony') {
-        const checkbox = document.getElementById('confirmCheckbox');
         const btn = document.getElementById('confirmBtn');
         const msg = document.getElementById('confirmMsg');
-        if (checkbox && btn && msg) {
-          checkbox.checked = true;
-          checkbox.disabled = true;
+        if (fiszkaNumberInput && categorySelect && btn && msg) {
+          fiszkaNumberInput.disabled = true;
+          categorySelect.disabled = true;
           btn.textContent = 'Potwierdzono';
           btn.disabled = true;
           msg.style.display = 'block';
@@ -316,10 +327,19 @@
     })();
 
     btn?.addEventListener('click', async () => {
-      if (!checkbox.checked) {
+      const fiszkaNumber = fiszkaNumberInput?.value?.trim() || '';
+      const category = categorySelect?.value || '';
+      
+      if (!fiszkaNumber) {
         msg.style.display = 'block';
         msg.style.color = '#ef4444';
-        msg.textContent = 'Zaznacz potwierdzenie, aby kontynuować.';
+        msg.textContent = 'Wpisz numer fiszki, aby kontynuować.';
+        return;
+      }
+      if (!category) {
+        msg.style.display = 'block';
+        msg.style.color = '#ef4444';
+        msg.textContent = 'Wybierz kategorię, aby kontynuować.';
         return;
       }
       if (!regId && !phone) {
@@ -336,7 +356,9 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             id: regId ? Number(regId) : undefined,
-            phone: regId ? undefined : phone
+            phone: regId ? undefined : phone,
+            fiszka_number: fiszkaNumber,
+            category: category
           }),
         });
         const result = await response.json();
@@ -346,7 +368,8 @@
           msg.textContent = 'Zapisano. Status: etap pierwszy ukończony.';
           btn.textContent = 'Potwierdzono';
           btn.disabled = true;
-          checkbox.disabled = true;
+          if (fiszkaNumberInput) fiszkaNumberInput.disabled = true;
+          if (categorySelect) categorySelect.disabled = true;
         } else {
           throw new Error(result.error || 'Błąd zapisu');
         }

@@ -15,15 +15,28 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { id, phone } = req.body || {};
+    const { id, phone, fiszka_number, category } = req.body || {};
 
     if (!id && !phone) {
       return res.status(400).json({ error: 'Wymagane jest id lub phone' });
     }
 
+    const updateData = {
+      status: 'etap pierwszy ukończony',
+      updated_at: new Date().toISOString()
+    };
+
+    if (fiszka_number) {
+      updateData.fiszka_number = fiszka_number;
+    }
+
+    if (category) {
+      updateData.category = category;
+    }
+
     let query = supabase
       .from('registrations')
-      .update({ status: 'etap pierwszy ukończony', updated_at: new Date().toISOString() })
+      .update(updateData)
       .select()
       .single();
 
