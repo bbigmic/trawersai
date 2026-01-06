@@ -506,7 +506,15 @@
         <div class="admin-container">
             <div class="admin-header">
                 <h1 class="admin-title">Zapisy na szkolenie</h1>
-                <button class="btn-ghost" onclick="logout()">Wyloguj się</button>
+                <div style="display:flex; gap:10px; align-items:center;">
+                    <button id="settingsToggleBtn" class="btn-ghost" onclick="toggleSettings()" title="Ustawienia" style="padding:10px;min-width:auto;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M12 1v6m0 6v6M5.64 5.64l4.24 4.24m4.24 4.24l4.24 4.24M1 12h6m6 0h6M5.64 18.36l4.24-4.24m4.24-4.24l4.24-4.24"></path>
+                        </svg>
+                    </button>
+                    <button class="btn-ghost" onclick="logout()">Wyloguj się</button>
+                </div>
             </div>
 
             <div id="errorMessage" class="error" style="display: none;"></div>
@@ -522,7 +530,7 @@
                 </div>
             </div>
 
-            <div class="registrations-table" style="margin-bottom: var(--spacing-2xl);">
+            <div id="settingsSection" class="registrations-table" style="margin-bottom: var(--spacing-2xl); display: none;">
                 <div class="table-header">
                     <div style="font-weight:700;">Ustawienia</div>
                 </div>
@@ -840,6 +848,24 @@
                 loadRegistrations();
             } catch (err) {
                 alert('Błąd połączenia podczas usuwania zapisu');
+            }
+        }
+
+        // Toggle settings section
+        function toggleSettings() {
+            const settingsSection = document.getElementById('settingsSection');
+            const toggleBtn = document.getElementById('settingsToggleBtn');
+            
+            if (settingsSection.style.display === 'none') {
+                settingsSection.style.display = 'block';
+                toggleBtn.style.background = 'rgba(124,58,237,0.2)';
+                toggleBtn.style.borderColor = 'rgba(124,58,237,0.4)';
+                // Załaduj ustawienia przy otwarciu
+                loadSettings();
+            } else {
+                settingsSection.style.display = 'none';
+                toggleBtn.style.background = 'rgba(255,255,255,0.06)';
+                toggleBtn.style.borderColor = 'var(--border)';
             }
         }
 
