@@ -522,6 +522,27 @@
                 </div>
             </div>
 
+            <div class="registrations-table" style="margin-bottom: var(--spacing-2xl);">
+                <div class="table-header">
+                    <div style="font-weight:700;">Ustawienia</div>
+                </div>
+                <div style="padding: var(--spacing-lg);">
+                    <div class="form-group" style="margin-bottom: var(--spacing-md);">
+                        <label for="fiszkaLink" class="form-label" style="color:var(--text-primary);font-weight:600;margin-bottom:8px;display:block;">Link do fiszki</label>
+                        <input 
+                            id="fiszkaLink" 
+                            type="url" 
+                            class="form-input" 
+                            placeholder="https://www.rozwojowe.eu/psf9/aplikuj/"
+                            style="width:100%;padding:12px 16px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:12px;color:var(--text-primary);font-size:15px;"
+                        >
+                        <div style="color:var(--muted);font-size:13px;margin-top:6px;">Link wyświetlany pod przyciskiem "wypełnij fiszkę teraz" w success.html</div>
+                    </div>
+                    <button id="saveSettingsBtn" class="btn-primary" onclick="saveSettings()">Zapisz ustawienia</button>
+                    <div id="settingsMessage" style="display:none;margin-top:12px;padding:10px;border-radius:8px;font-size:14px;"></div>
+                </div>
+            </div>
+
             <div class="registrations-table">
                 <div class="table-header">
                     <div style="display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;">
@@ -594,6 +615,7 @@
                     document.getElementById('loginScreen').style.display = 'none';
                     document.getElementById('adminPanel').style.display = 'block';
                     loadRegistrations();
+                    loadSettings();
                 } else {
                     errorDiv.textContent = data.error || 'Błąd logowania';
                     errorDiv.style.display = 'block';
@@ -818,6 +840,98 @@
                 loadRegistrations();
             } catch (err) {
                 alert('Błąd połączenia podczas usuwania zapisu');
+            }
+        }
+
+        // Load settings
+        async function loadSettings() {
+            try {
+                const response = await fetch('/api/admin/settings', {
+                    method: 'GET',
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    const linkInput = document.getElementById('fiszkaLink');
+                    if (linkInput && result.data?.fiszka_link) {
+                        linkInput.value = result.data.fiszka_link;
+                    }
+                }
+            } catch (error) {
+                console.error('Błąd ładowania ustawień:', error);
+            }
+        }
+
+        // Save settings
+        async function saveSettings() {
+            const linkInput = document.getElementById('fiszkaLink');
+            const messageDiv = document.getElementById('settingsMessage');
+            const saveBtn = document.getElementById('saveSettingsBtn');
+
+            if (!linkInput) return;
+
+            const link = linkInput.value.trim();
+
+            if (!link) {
+                messageDiv.style.display = 'block';
+                messageDiv.style.background = 'rgba(239,68,68,0.12)';
+                messageDiv.style.color = '#fecaca';
+                messageDiv.style.border = '1px solid rgba(239,68,68,0.22)';
+                messageDiv.textContent = 'Link jest wymagany';
+                return;
+            }
+
+            // Walidacja URL
+            try {
+                new URL(link);
+            } catch {
+                messageDiv.style.display = 'block';
+                messageDiv.style.background = 'rgba(239,68,68,0.12)';
+                messageDiv.style.color = '#fecaca';
+                messageDiv.style.border = '1px solid rgba(239,68,68,0.22)';
+                messageDiv.textContent = 'Nieprawidłowy format URL';
+                return;
+            }
+
+            saveBtn.disabled = true;
+            saveBtn.style.opacity = '0.7';
+            messageDiv.style.display = 'none';
+
+            try {
+                const response = await fetch('/api/admin/settings', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${adminToken}`,
+                    },
+                    body: JSON.stringify({ fiszka_link: link }),
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    messageDiv.style.display = 'block';
+                    messageDiv.style.background = 'rgba(34,197,94,0.12)';
+                    messageDiv.style.color = '#86efac';
+                    messageDiv.style.border = '1px solid rgba(34,197,94,0.22)';
+                    messageDiv.textContent = 'Ustawienia zapisane pomyślnie';
+                } else {
+                    messageDiv.style.display = 'block';
+                    messageDiv.style.background = 'rgba(239,68,68,0.12)';
+                    messageDiv.style.color = '#fecaca';
+                    messageDiv.style.border = '1px solid rgba(239,68,68,0.22)';
+                    messageDiv.textContent = result.error || 'Błąd zapisywania ustawień';
+                }
+            } catch (error) {
+                messageDiv.style.display = 'block';
+                messageDiv.style.background = 'rgba(239,68,68,0.12)';
+                messageDiv.style.color = '#fecaca';
+                messageDiv.style.border = '1px solid rgba(239,68,68,0.22)';
+                messageDiv.textContent = 'Błąd połączenia podczas zapisywania ustawień';
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.style.opacity = '1';
             }
         }
 

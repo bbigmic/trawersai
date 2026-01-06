@@ -69,6 +69,21 @@ BEGIN
     END IF;
 END $$;
 
+-- Utwórz tabelę dla ustawień
+CREATE TABLE IF NOT EXISTS settings (
+    id BIGSERIAL PRIMARY KEY,
+    key TEXT NOT NULL UNIQUE,
+    value TEXT NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Utwórz indeks dla klucza
+CREATE INDEX IF NOT EXISTS idx_settings_key ON settings(key);
+
+-- Dodaj komentarz do tabeli
+COMMENT ON TABLE settings IS 'Tabela przechowująca ustawienia aplikacji';
+
 -- Opcjonalnie: Utwórz RLS (Row Level Security) jeśli chcesz zabezpieczyć dane
 -- ALTER TABLE registrations ENABLE ROW LEVEL SECURITY;
 

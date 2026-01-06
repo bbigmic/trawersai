@@ -183,7 +183,7 @@
         <h1>Dziękujemy! Co dalej?</h1>
         <p class="subtitle">Wysłaliśmy Ci maila z tą samą instrukcją. Możesz działać od razu:</p>
         <div class="cta">
-          <a class="btn-primary" href="https://www.rozwojowe.eu/psf9/aplikuj/" target="_blank" rel="noopener">Wypełnij fiszkę teraz →</a>
+          <a id="fiszkaLinkBtn" class="btn-primary" href="#" target="_blank" rel="noopener">Wypełnij fiszkę teraz →</a>
           <div class="support">
             <div class="help-text">Wypełnij fiszkę z naszą pomocą</div>
             <div class="phone-group">
@@ -273,11 +273,54 @@
           <a class="phone" href="tel:+48720514491">📞 +48 720 514 491</a>
         </div>
         <div style="height:12px;"></div>
-        <a class="link-contrast" href="https://www.rozwojowe.eu/psf9/aplikuj/" target="_blank" rel="noopener">Przejdź do fiszki →</a>
+        <a id="fiszkaLinkSidebar" class="link-contrast" href="#" target="_blank" rel="noopener">Przejdź do fiszki →</a>
       </aside>
     </div>
   </div>
   <script>
+    // Pobierz link fiszki z API
+    async function loadFiszkaLink() {
+      try {
+        const response = await fetch('/api/admin/settings', {
+          method: 'GET',
+        });
+        const result = await response.json();
+        
+        if (response.ok && result.success && result.data?.fiszka_link) {
+          const link = result.data.fiszka_link;
+          const btn = document.getElementById('fiszkaLinkBtn');
+          const sidebarLink = document.getElementById('fiszkaLinkSidebar');
+          
+          if (btn) {
+            btn.href = link;
+          }
+          if (sidebarLink) {
+            sidebarLink.href = link;
+          }
+        } else {
+          // Fallback do domyślnego linku
+          const defaultLink = 'https://www.rozwojowe.eu/psf9/aplikuj/';
+          const btn = document.getElementById('fiszkaLinkBtn');
+          const sidebarLink = document.getElementById('fiszkaLinkSidebar');
+          
+          if (btn) btn.href = defaultLink;
+          if (sidebarLink) sidebarLink.href = defaultLink;
+        }
+      } catch (error) {
+        console.error('Błąd ładowania linku fiszki:', error);
+        // Fallback do domyślnego linku
+        const defaultLink = 'https://www.rozwojowe.eu/psf9/aplikuj/';
+        const btn = document.getElementById('fiszkaLinkBtn');
+        const sidebarLink = document.getElementById('fiszkaLinkSidebar');
+        
+        if (btn) btn.href = defaultLink;
+        if (sidebarLink) sidebarLink.href = defaultLink;
+      }
+    }
+
+    // Załaduj link przy starcie
+    loadFiszkaLink();
+
     // Odczytaj id/phone z URL
     const params = new URLSearchParams(window.location.search);
     let regId = params.get('id');
